@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Viaje Europa 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); min-height: 100vh; color: #fff; }
+  header { text-align: center; padding: 40px 20px 20px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
+  header h1 { font-size: 2rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(90deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  header p { color: rgba(255,255,255,0.6); margin-top: 6px; }
+  .countdown-box { margin: 30px auto; max-width: 500px; background: linear-gradient(135deg, #f7971e22, #ffd20022); border: 1px solid #ffd20055; border-radius: 20px; padding: 24px; text-align: center; }
+  .label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #ffd200; margin-bottom: 14px; }
+  .countdown-nums { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .unit { background: rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 18px; min-width: 70px; }
+  .unit span { display: block; font-size: 2rem; font-weight: 800; color: #ffd200; }
+  .unit small { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .section-title { text-align: center; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 20px 0 16px; }
+  .weather-strip { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 0 20px 20px; max-width: 700px; margin: 0 auto; }
+  .weather-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 14px 18px; text-align: center; min-width: 110px; }
+  .wicon { font-size: 1.8rem; }
+  .wcity { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin: 4px 0 2px; text-transform: uppercase; letter-spacing: 1px; }
+  .wtemp { font-size: 1.5rem; font-weight: 700; }
+  .wdesc { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+  .resumen { max-width: 680px; margin: 0 auto 20px; padding: 0 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .resumen-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px 16px; text-align: center; min-width: 90px; }
+  .resumen-item .num { font-size: 1.5rem; font-weight: 800; color: #ffd200; }
+  .resumen-item .desc { font-size: 0.68rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .timeline { max-width: 680px; margin: 0 auto; padding: 0 20px 60px; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 50px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #f7971e, #ffd200, #e040fb, #56ccf2, #43e97b, #ff6b6b, #f7971e); opacity: 0.3; }
+  .tl-item { display: flex; gap: 16px; margin-bottom: 12px; }
+  .tl-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; z-index: 1; border: 2px solid rgba(255,255,255,0.15); }
+  .tl-icon.vuelo { background: linear-gradient(135deg, #f7971e, #ffd200); }
+  .tl-icon.tren { background: linear-gradient(135deg, #56ccf2, #2f80ed); }
+  .tl-icon.ciudad { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .tl-icon.hotel { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+  .tl-icon.food { background: linear-gradient(135deg, #ff6b6b, #ee0979); }
+  .tl-icon.tip { background: linear-gradient(135deg, #f7971e88, #ffd20088); }
+  .tl-content { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 14px 16px; transition: all 0.2s; }
+  .tl-content:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+  .cl-madrid { border-left: 3px solid #f7971e; }
+  .cl-barcelona { border-left: 3px solid #e040fb; }
+  .cl-paris { border-left: 3px solid #56ccf2; }
+  .cl-bruselas { border-left: 3px solid #43e97b; }
+  .cl-food { border-left: 3px solid #ff6b6b; }
+  .tl-date { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .tl-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+  .tl-detail { font-size: 0.8rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .tl-code { font-size: 0.72rem; color: #ffd200; margin-top: 4px; font-family: monospace; }
+  .tl-address { font-size: 0.72rem; color: rgba(255,255,255,0.3); margin-top: 3px; font-style: italic; }
+  .alerta { margin-top: 7px; font-size: 0.72rem; color: rgba(255,180,0,0.7); }
+  .badge { display: inline-block; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; margin-top: 6px; font-weight: 600; margin-right: 4px; }
+  .badge.conf { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid #43e97b55; }
+  .badge.pend { background: rgba(255,200,0,0.15); color: #ffd200; border: 1px solid #ffd20055; }
+  .badge.casa { background: rgba(255,150,50,0.15); color: #ffaa50; border: 1px solid #ffaa5055; }
+  .badge.food { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid #ff6b6b55; }
+  .noches { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 1px 8px; font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-left: 6px; font-weight: 400; }
+  .divider { text-align: center; font-size: 0.7rem; color: rgba(255,255,255,0.2); letter-spacing: 2px; margin: 6px 0 12px 56px; }
+  footer { text-align: center; padding: 20px; color: rgba(255,255,255,0.2); font-size: 0.72rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌍 EUROPA 2026</h1>
+  <p>Mariano · María Soledad · Santino 👶</p>
+  <p style="font-size:0.8rem;margin-top:4px;color:rgba(255,255,255,0.4)">Madrid · Barcelona · París · Bruselas · Madrid</p>
+</header>
+
+<div style="max-width:680px;margin:0 auto;padding:0 20px;">
+  <div class="countdown-box">
+    <div class="label">⏳ Faltan para el despegue</div>
+    <div class="countdown-nums">
+      <div class="unit"><span id="d">--</span><small>días</small></div>
+      <div class="unit"><span id="h">--</span><small>horas</small></div>
+      <div class="unit"><span id="m">--</span><small>min</small></div>
+      <div class="unit"><span id="s">--</span><small>seg</small></div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:680px;margin:0 auto;padding:0 20px 10px;">
+  <div class="section-title">📊 Resumen</div>
+</div>
+<div class="resumen">
+  <div class="resumen-item"><div class="num">19</div><div class="desc">Días</div></div>
+  <div class="resumen-item"><div class="num">4</div><div class="desc">Ciudades</div></div>
+  <div class="resumen-item"><div class="num">2</div><div class="desc">Vuelos</div></div>
+  <div class="resumen-item"><div class="num">3</div><div class="desc">Trenes</div></div>
+  <div class="resumen-item"><div class="num">4</div><div class="desc">Hoteles</div></div>
+</div>
+
+<div style="max-width:680px;margin:0 auto;padding:0 20px;">
+  <div class="section-title">🌤 Clima típico de abril</div>
+  <div class="weather-strip">
+    <div class="weather-card"><div class="wicon">☀️</div><div class="wcity">Madrid</div><div class="wtemp">16°</div><div class="wdesc">Soleado</div></div>
+    <div class="weather-card"><div class="wicon">🌤️</div><div class="wcity">Barcelona</div><div class="wtemp">18°</div><div class="wdesc">Templado</div></div>
+    <div class="weather-card"><div class="wicon">🌦️</div><div class="wcity">París</div><div class="wtemp">14°</div><div class="wdesc">Variable</div></div>
+    <div class="weather-card"><div class="wicon">🌧️</div><div class="wcity">Bruselas</div><div class="wtemp">12°</div><div class="wdesc">Nublado</div></div>
+  </div>
+</div>
+
+<div style="max-width:680px;margin:0 auto;padding:0 20px 10px;">
+  <div class="section-title">📅 Agenda completa</div>
+</div>
+
+<div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-icon vuelo">✈️</div>
+    <div class="tl-content">
+      <div class="tl-date">Sábado 11 de abril · 23:55hs</div>
+      <div class="tl-title">Vuelo EZE → Madrid · AR1132</div>
+      <div class="tl-detail">Aerolíneas Argentinas · Airbus A330 · 12hs 15min<br>Ezeiza Terminal Departures → Madrid Terminal 1<br>Llegada: domingo 12/04 a las 17:10hs</div>
+      <div class="tl-code">📋 Reserva: LBLBPG · Boletos: 0446901805181/82/83</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="divider">── MADRID ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon hotel">🏨</div>
+    <div class="tl-content cl-madrid">
+      <div class="tl-date">12 — 14 de abril · 2 noches</div>
+      <div class="tl-title">Hostal Lisboa</div>
+      <div class="tl-detail">Check-in: 12/04 llegada 17:10hs · Check-out: 14/04 antes del tren</div>
+      <div class="tl-address">📍 Ventura de la Vega 17, Madrid</div>
+      <div class="alerta">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon tip">🗺️</div>
+    <div class="tl-content cl-madrid">
+      <div class="tl-date">Qué visitar · Madrid</div>
+      <div class="tl-title">Atracciones recomendadas</div>
+      <div class="tl-detail">🌳 <b>Parque del Retiro</b> — Ideal con cochecito · Gratis ⭐4.8<br>🏛️ <b>Plaza Mayor</b> — Histórica y vibrante · Gratis ⭐4.6<br>🌿 <b>Campo del Moro</b> — Jardines reales tranquilos · Gratis ⭐4.6</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon food">🍽️</div>
+    <div class="tl-content cl-food">
+      <div class="tl-date">Dónde comer · Madrid · hasta 30€</div>
+      <div class="tl-title">Restaurantes recomendados</div>
+      <div class="tl-detail">🥘 <b>La Puebla</b> — A metros del hotel, menú 15€ ⭐4.6<br><i style="font-size:0.7rem;opacity:0.5">📍 Ventura de la Vega 12</i><br>🍷 <b>Taberna La Fragua de Vulcano</b> — Tapas auténticas ⭐4.4<br>🎨 <b>Rosi La Loca</b> — Ambiente colorido, buena paella ⭐4.7</div>
+      <span class="badge food">🍴 Todos bajo 30€</span>
+    </div>
+  </div>
+
+  <div class="divider">── TREN A BARCELONA ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon tren">🚂</div>
+    <div class="tl-content">
+      <div class="tl-date">Martes 14 de abril · 09:57hs</div>
+      <div class="tl-title">Tren Madrid → Barcelona · Iryo 06011</div>
+      <div class="tl-detail">Salida 09:57hs Madrid Puerta de Atocha-Almudena Grandes<br>Llegada 12:49hs Barcelona Sants · Duración 2h52</div>
+      <div class="tl-code">📋 Reserva: 3YXG4E</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="divider">── BARCELONA ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon hotel">🏠</div>
+    <div class="tl-content cl-barcelona">
+      <div class="tl-date">14 — 17 de abril · 3 noches</div>
+      <div class="tl-title">Casa de Tomás 👨‍👩‍👧</div>
+      <div class="tl-detail">Llegada 12:49hs · Salida 17/04 antes del tren 09:26hs</div>
+      <div class="tl-address">📍 Pau Claris 137, Principal 1, Barcelona</div>
+      <span class="badge casa">🏠 Casa familiar</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon tip">🗺️</div>
+    <div class="tl-content cl-barcelona">
+      <div class="tl-date">Qué visitar · Barcelona</div>
+      <div class="tl-title">Atracciones recomendadas</div>
+      <div class="tl-detail">⛪ <b>Sagrada Família</b> — Reservar online con anticipación ⭐4.8<br>🌈 <b>Park Güell</b> — Mosaicos y vistas increíbles ⭐4.4<br>🏘️ <b>Poble Espanyol</b> — Muy familiar y tranquilo ⭐4.2</div>
+      <span class="badge pend">⚠️ Reservar Sagrada Família y Güell online ya</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon food">🍽️</div>
+    <div class="tl-content cl-food">
+      <div class="tl-date">Dónde comer · Barcelona · hasta 30€</div>
+      <div class="tl-title">Restaurantes recomendados</div>
+      <div class="tl-detail">🥘 <b>Can Vilaró</b> — Cocina catalana auténtica ⭐4.4<br>🥗 <b>Gelida</b> — Cocina casera, precios razonables ⭐4.5<br>🍲 <b>Comida de Olla</b> — Paella increíble cerca del Park Güell ⭐4.7</div>
+      <span class="badge food">🍴 Todos bajo 30€</span>
+    </div>
+  </div>
+
+  <div class="divider">── TREN A PARÍS ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon tren">🚂</div>
+    <div class="tl-content">
+      <div class="tl-date">Viernes 17 de abril · 09:26hs</div>
+      <div class="tl-title">Tren Barcelona → París · TGV 9708</div>
+      <div class="tl-detail">Salida 09:26hs Barcelona Sants<br>Llegada 16:12hs París Gare de Lyon · Duración 6h46</div>
+      <div class="tl-code">📋 Reserva: MI4L3U</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="divider">── PARÍS ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon hotel">🏨</div>
+    <div class="tl-content cl-paris">
+      <div class="tl-date">17 — 22 de abril · 5 noches</div>
+      <div class="tl-title">Citadines Saint-Germain-des-Prés</div>
+      <div class="tl-detail">Check-in: 17/04 llegada 16:12hs · Check-out: 22/04</div>
+      <div class="tl-address">📍 53 ter, Quai des Grands Augustins, París</div>
+      <div class="alerta">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon tip">🗺️</div>
+    <div class="tl-content cl-paris">
+      <div class="tl-date">Qué visitar · París</div>
+      <div class="tl-title">Atracciones recomendadas</div>
+      <div class="tl-detail">🌸 <b>Jardín de las Tullerías</b> — Perfecto con cochecito · Gratis ⭐4.6<br>⛪ <b>Sacré-Cœur Montmartre</b> — Vistas increíbles · Gratis ⭐4.7<br>🌿 <b>Jardin des Plantes</b> — Tranquilo, ideal bebés · Gratis ⭐4.6<br>🎡 <b>Jardin d'Acclimatation</b> — Parque familiar ⭐4.3</div>
+      <span class="badge conf">✅ Mayoría gratuitos</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon food">🍽️</div>
+    <div class="tl-content cl-food">
+      <div class="tl-date">Dónde comer · París · hasta 30€</div>
+      <div class="tl-title">Restaurantes recomendados</div>
+      <div class="tl-detail">🥩 <b>Bouillon Pigalle</b> — Clásico francés, muy económico ⭐4.6<br>🍲 <b>Bouillon Chartier</b> — Histórico art déco, platos desde 8€ ⭐4.1<br>🫕 <b>Chez Gladines</b> — Porciones enormes ⭐4.4<br>🏡 <b>La Petite Rose des Sables</b> — Auténtico, trato familiar ⭐4.9</div>
+      <span class="badge food">🍴 Todos bajo 30€</span>
+    </div>
+  </div>
+
+  <div class="divider">── TREN A BRUSELAS ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon tren">🚂</div>
+    <div class="tl-content">
+      <div class="tl-date">Miércoles 22 de abril</div>
+      <div class="tl-title">Tren París → Bruselas</div>
+      <div class="tl-detail">París Gare du Midi → Bruselas · Thalys · Duración aprox. 1h20</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge pend">⏳ Horario y código pendiente</span>
+    </div>
+  </div>
+
+  <div class="divider">── BRUSELAS ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon hotel">🏨</div>
+    <div class="tl-content cl-bruselas">
+      <div class="tl-date">22 — 25 de abril · 3 noches</div>
+      <div class="tl-title">Aparthotel Adagio Brussels Grand Place</div>
+      <div class="tl-detail">Check-in: 22/04 · Check-out: 25/04</div>
+      <div class="tl-address">📍 Brussels Grand Place, Bruselas</div>
+      <div class="alerta">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="divider">── VUELO A MADRID ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon vuelo">✈️</div>
+    <div class="tl-content">
+      <div class="tl-date">Sábado 25 de abril</div>
+      <div class="tl-title">Vuelo Bruselas → Madrid</div>
+      <div class="tl-detail">Brussels Airport (BRU) → Madrid Barajas<br>Aerolínea y horario pendiente de confirmar</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge pend">⏳ Pendiente de confirmar</span>
+    </div>
+  </div>
+
+  <div class="divider">── MADRID REGRESO ──</div>
+
+  <div class="tl-item">
+    <div class="tl-icon hotel">🏨</div>
+    <div class="tl-content cl-madrid">
+      <div class="tl-date">25 — 30 de abril · 5 noches</div>
+      <div class="tl-title">Hostal Lisboa (regreso)</div>
+      <div class="tl-detail">Check-in: 25/04 · Check-out: 30/04 antes del vuelo 20:05hs</div>
+      <div class="tl-address">📍 Ventura de la Vega 17, Madrid</div>
+      <div class="alerta">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-icon vuelo">🏠</div>
+    <div class="tl-content">
+      <div class="tl-date">Jueves 30 de abril · 20:05hs</div>
+      <div class="tl-title">Vuelo Madrid → EZE · AR1133 🏠</div>
+      <div class="tl-detail">Aerolíneas Argentinas · Airbus A330 · 13hs 5min<br>Madrid Terminal 1 → Ezeiza · Llegada 01/05 04:10hs</div>
+      <div class="tl-code">📋 Reserva: LBLBPG · Boletos: 0446901805181/82/83</div>
+      <div class="alerta">🔔 Alerta: 1 día antes + 2 horas antes</div>
+      <span class="badge conf">✓ Confirmado</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>Pendiente: tren París→Bruselas y vuelo Bruselas→Madrid · Actualizado al 14/03/2026</footer>
+
+<script>
+  const destino = new Date('2026-04-11T235500');
+  function tick() {
+    const diff = destino - new Date();
+    if (diff <= 0) { document.getElementById('d').textContent='🛫'; return; }
+    document.getElementById('d').textContent = Math.floor(diff/86400000);
+    document.getElementById('h').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    document.getElementById('m').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    document.getElementById('s').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
