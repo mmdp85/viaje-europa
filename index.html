@@ -48,4 +48,342 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .tl-body.mad { border-left: 2px solid #d4af37; border-radius: 0 14px 14px 0; }
 .tl-body.bcn { border-left: 2px solid #7f77dd; border-radius: 0 14px 14px 0; }
 .tl-body.par { border-left: 2px solid #378add; border-radius: 0 14px 14px 0; }
-.tl-body.br
+.tl-body.bru { border-left: 2px solid #1d9e75; border-radius: 0 14px 14px 0; }
+.tl-date { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.tl-title { font-size: 13px; font-weight: 500; margin-bottom: 5px; }
+.tl-detail { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+.tl-code { font-size: 11px; color: #d4af37; font-family: monospace; margin-top: 5px; }
+.tl-addr { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 3px; font-style: italic; }
+.tl-alert { font-size: 11px; color: rgba(255,180,60,0.6); margin-top: 5px; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; margin-top: 6px; margin-right: 4px; }
+.b-ok { background: rgba(29,158,117,0.15); color: #1d9e75; border: 1px solid rgba(29,158,117,0.3); }
+.b-casa { background: rgba(212,175,55,0.12); color: #d4af37; border: 1px solid rgba(212,175,55,0.25); }
+.divtl { text-align: center; font-size: 10px; color: rgba(255,255,255,0.1); letter-spacing: 2px; text-transform: uppercase; margin: 6px 0 12px 60px; }
+.noch { background: rgba(255,255,255,0.07); border-radius: 20px; padding: 1px 8px; font-size: 10px; color: rgba(255,255,255,0.35); margin-left: 6px; }
+.budget-box { background: #0e0e16; border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 20px; margin: 0 0 40px; }
+.brow { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+.brow:last-of-type { border-bottom: none; }
+.brow .lbl { color: rgba(255,255,255,0.45); }
+.brow .val { color: rgba(255,255,255,0.8); font-weight: 500; }
+.btotal { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(212,175,55,0.2); }
+.btotal .lbl { font-size: 14px; color: rgba(255,255,255,0.6); }
+.btotal .val { font-size: 22px; font-weight: 500; color: #d4af37; }
+.foot { text-align: center; padding: 16px 0 32px; font-size: 10px; color: rgba(255,255,255,0.12); letter-spacing: 2px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Viaje familiar · Abril — Mayo 2026</div>
+    <div class="hero-title">Europa 2026</div>
+    <div class="hero-sub">Mariano · María Soledad · Santino</div>
+    <div class="hero-pills">
+      <span class="pill">11 abr — 01 may</span>
+      <span class="pill">20 días</span>
+      <span class="pill">4 ciudades</span>
+      <span class="pill gold">US$10.663 invertidos</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="stats-row">
+    <div class="stat"><span class="n">20</span><span class="l">Días</span></div>
+    <div class="stat"><span class="n">4</span><span class="l">Ciudades</span></div>
+    <div class="stat"><span class="n">3</span><span class="l">Trenes</span></div>
+    <div class="stat"><span class="n">3</span><span class="l">Vuelos</span></div>
+    <div class="stat"><span class="n">6</span><span class="l">Hoteles</span></div>
+  </div>
+
+  <div class="sec">ruta del viaje</div>
+  <div class="route-row">
+    <div class="rdot"><div class="dot" style="background:#d4af37"></div><span class="nm" style="color:#d4af37">Madrid</span></div>
+    <div class="rarr">→</div>
+    <div class="rdot"><div class="dot" style="background:#7f77dd"></div><span class="nm" style="color:#7f77dd">Barcelona</span></div>
+    <div class="rarr">→</div>
+    <div class="rdot"><div class="dot" style="background:#378add"></div><span class="nm" style="color:#378add">París</span></div>
+    <div class="rarr">→</div>
+    <div class="rdot"><div class="dot" style="background:#1d9e75"></div><span class="nm" style="color:#1d9e75">Bruselas</span></div>
+    <div class="rarr">→</div>
+    <div class="rdot"><div class="dot" style="background:#d4af37"></div><span class="nm" style="color:#d4af37">Madrid</span></div>
+  </div>
+
+  <div class="sec">ciudades</div>
+  <div class="city-grid">
+    <div class="city-card">
+      <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80" alt="Madrid">
+      <div class="fade"></div>
+      <div class="cb">12–14 + 25–30 abr</div>
+      <div class="ci"><h3>Madrid</h3><p>7 noches · Waou Apartamentos Sol</p></div>
+    </div>
+    <div class="city-card">
+      <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600&q=80" alt="Barcelona">
+      <div class="fade"></div>
+      <div class="cb">14–17 abr</div>
+      <div class="ci"><h3>Barcelona</h3><p>3 noches · Casa de Tomás</p></div>
+    </div>
+    <div class="city-card">
+      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80" alt="París">
+      <div class="fade"></div>
+      <div class="cb">17–22 abr</div>
+      <div class="ci"><h3>París</h3><p>5 noches · Citadines + Cluny Square</p></div>
+    </div>
+    <div class="city-card">
+      <img src="https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=600&q=80" alt="Bruselas">
+      <div class="fade"></div>
+      <div class="cb">22–25 abr</div>
+      <div class="ci"><h3>Bruselas</h3><p>3 noches · Adagio Grand Place</p></div>
+    </div>
+  </div>
+
+  <div class="sec">agenda completa</div>
+  <div class="tl">
+
+    <div class="tli">
+      <div class="tl-ic ic-v">✈️</div>
+      <div class="tl-body">
+        <div class="tl-date">Sábado 11 abril · 23:55hs</div>
+        <div class="tl-title">Vuelo EZE → Madrid · AR1132</div>
+        <div class="tl-detail">Aerolíneas Argentinas · A330 · 12h15<br>Ezeiza Terminal Departures → Madrid Terminal 1<br>Llegada domingo 12/04 · 17:10hs</div>
+        <div class="tl-code">Reserva: LBLBPG · E-tickets: 0446901805181 / 82 / 83</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── madrid ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏨</div>
+      <div class="tl-body mad">
+        <div class="tl-date">12 — 14 abril · 2 noches</div>
+        <div class="tl-title">Waou Apartamentos en Sol Deluxe 1</div>
+        <div class="tl-detail">Check-in 12/04 · Check-out 14/04 antes del tren 09:57hs</div>
+        <div class="tl-addr">📍 Puerta del Sol, Centro de Madrid</div>
+        <div class="tl-code">US$484</div>
+        <div class="tl-alert">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🗺️</div>
+      <div class="tl-body mad">
+        <div class="tl-date">Qué visitar · Madrid</div>
+        <div class="tl-title">Atracciones recomendadas</div>
+        <div class="tl-detail">Parque del Retiro · ideal con cochecito · gratis ⭐4.8<br>Plaza Mayor · arquitectura histórica · gratis ⭐4.6<br>Campo del Moro · jardines reales tranquilos · gratis ⭐4.6</div>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🍽️</div>
+      <div class="tl-body">
+        <div class="tl-date">Dónde comer · Madrid · hasta 30€</div>
+        <div class="tl-title">Restaurantes recomendados</div>
+        <div class="tl-detail">La Puebla · menú 15€ ⭐4.6<br>Taberna La Fragua de Vulcano · tapas auténticas ⭐4.4<br>Rosi La Loca · ambiente colorido, buena paella ⭐4.7</div>
+      </div>
+    </div>
+
+    <div class="divtl">── tren a barcelona ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-t">🚂</div>
+      <div class="tl-body">
+        <div class="tl-date">Martes 14 abril · 09:57hs</div>
+        <div class="tl-title">Tren Madrid → Barcelona · Iryo 06011</div>
+        <div class="tl-detail">Salida 09:57hs Atocha-Almudena Grandes · Llegada 12:49hs Barcelona Sants · 2h52</div>
+        <div class="tl-code">Reserva: 3YXG4E · US$150</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── barcelona ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏠</div>
+      <div class="tl-body bcn">
+        <div class="tl-date">14 — 17 abril · 3 noches</div>
+        <div class="tl-title">Casa de Tomás</div>
+        <div class="tl-detail">Llegada 12:49hs · Salida 17/04 antes del tren 09:26hs</div>
+        <div class="tl-addr">📍 Pau Claris 137, Principal 1, Barcelona</div>
+        <span class="badge b-casa">Casa familiar · gratis</span>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🗺️</div>
+      <div class="tl-body bcn">
+        <div class="tl-date">Qué visitar · Barcelona</div>
+        <div class="tl-title">Atracciones recomendadas</div>
+        <div class="tl-detail">Sagrada Família · reservar online con anticipación ⭐4.8<br>Park Güell · mosaicos y vistas increíbles ⭐4.4<br>Poble Espanyol · muy familiar y tranquilo ⭐4.2</div>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🍽️</div>
+      <div class="tl-body">
+        <div class="tl-date">Dónde comer · Barcelona · hasta 30€</div>
+        <div class="tl-title">Restaurantes recomendados</div>
+        <div class="tl-detail">Can Vilaró · cocina catalana auténtica ⭐4.4<br>Gelida · cocina casera, precios razonables ⭐4.5<br>Comida de Olla · paella increíble cerca del Park Güell ⭐4.7</div>
+      </div>
+    </div>
+
+    <div class="divtl">── tren a parís ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-t">🚂</div>
+      <div class="tl-body">
+        <div class="tl-date">Viernes 17 abril · 09:26hs</div>
+        <div class="tl-title">Tren Barcelona → París · TGV INOUI 9708</div>
+        <div class="tl-detail">Salida 09:26hs Barcelona Sants · Llegada 16:12hs París Gare de Lyon · 6h46</div>
+        <div class="tl-code">Reserva: MI4L3U · US$680</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── parís ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏨</div>
+      <div class="tl-body par">
+        <div class="tl-date">17 — 21 abril · 4 noches</div>
+        <div class="tl-title">Citadines Saint-Germain-des-Prés</div>
+        <div class="tl-detail">Check-in 17/04 llegada 16:12hs · Check-out 21/04</div>
+        <div class="tl-addr">📍 53 ter, Quai des Grands Augustins, París</div>
+        <div class="tl-code">US$1.316</div>
+        <div class="tl-alert">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏨</div>
+      <div class="tl-body par">
+        <div class="tl-date">21 — 22 abril · 1 noche</div>
+        <div class="tl-title">Hotel Cluny Square</div>
+        <div class="tl-detail">Check-in 21/04 · Check-out 22/04 antes del tren 11:51hs</div>
+        <div class="tl-addr">📍 París</div>
+        <div class="tl-code">US$210</div>
+        <div class="tl-alert">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🗺️</div>
+      <div class="tl-body par">
+        <div class="tl-date">Qué visitar · París</div>
+        <div class="tl-title">Atracciones recomendadas</div>
+        <div class="tl-detail">Jardín de las Tullerías · perfecto con cochecito · gratis ⭐4.6<br>Sacré-Cœur Montmartre · vistas increíbles · gratis ⭐4.7<br>Jardin des Plantes · tranquilo, ideal bebés · gratis ⭐4.6<br>Jardin d'Acclimatation · parque familiar ⭐4.3</div>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-f">🍽️</div>
+      <div class="tl-body">
+        <div class="tl-date">Dónde comer · París · hasta 30€</div>
+        <div class="tl-title">Restaurantes recomendados</div>
+        <div class="tl-detail">Bouillon Pigalle · clásico francés, muy económico ⭐4.6<br>Bouillon Chartier · histórico art déco, platos desde 8€ ⭐4.1<br>Chez Gladines · porciones enormes ⭐4.4<br>La Petite Rose des Sables · auténtico, trato familiar ⭐4.9</div>
+      </div>
+    </div>
+
+    <div class="divtl">── tren a bruselas ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-t">🚂</div>
+      <div class="tl-body">
+        <div class="tl-date">Miércoles 22 abril · 11:51hs</div>
+        <div class="tl-title">Tren París → Bruselas · Eurostar ES 9335</div>
+        <div class="tl-detail">Paris Gare du Nord → Bruxelles-Midi · 1h26<br>Llegada 13:17hs · Vagón 8 · Asientos 63 / 64 / 67<br>⚠️ Llegar a la estación antes de las 11:36hs</div>
+        <div class="tl-code">Reserva: M4PKM2 · US$180</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── bruselas ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏨</div>
+      <div class="tl-body bru">
+        <div class="tl-date">22 — 25 abril · 3 noches</div>
+        <div class="tl-title">Aparthotel Adagio Brussels Grand Place</div>
+        <div class="tl-detail">Check-in 22/04 · Check-out 25/04</div>
+        <div class="tl-addr">📍 Brussels Grand Place, Bruselas</div>
+        <div class="tl-code">US$1.059</div>
+        <div class="tl-alert">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── vuelo a madrid ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-v">✈️</div>
+      <div class="tl-body">
+        <div class="tl-date">Sábado 25 abril · 19:45hs</div>
+        <div class="tl-title">Vuelo Bruselas → Madrid · Iberia VY5093</div>
+        <div class="tl-detail">Brussels Airport BRU → Madrid Barajas · Llegada 22:15hs</div>
+        <div class="tl-code">US$800</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="divtl">── madrid regreso ──</div>
+
+    <div class="tli">
+      <div class="tl-ic ic-h">🏨</div>
+      <div class="tl-body mad">
+        <div class="tl-date">25 — 30 abril · 5 noches</div>
+        <div class="tl-title">Waou Apartamentos en Sol Deluxe 1</div>
+        <div class="tl-detail">Check-in 25/04 · Check-out 30/04 antes del vuelo 20:05hs</div>
+        <div class="tl-addr">📍 Puerta del Sol, Centro de Madrid</div>
+        <div class="tl-code">US$1.234</div>
+        <div class="tl-alert">🔔 Alerta check-in: 1 día antes + 2hs antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+    <div class="tli">
+      <div class="tl-ic ic-v">🏠</div>
+      <div class="tl-body">
+        <div class="tl-date">Jueves 30 abril · 20:05hs</div>
+        <div class="tl-title">Vuelo Madrid → EZE · AR1133 — regreso a casa</div>
+        <div class="tl-detail">Aerolíneas Argentinas · A330 · 13h05<br>Madrid Terminal 1 → Ezeiza · Llegada 01/05 04:10hs</div>
+        <div class="tl-code">Reserva: LBLBPG · E-tickets: 0446901805181 / 82 / 83</div>
+        <div class="tl-alert">🔔 Alerta: 1 día antes + 2 horas antes</div>
+        <span class="badge b-ok">Confirmado</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec">resumen de gastos</div>
+  <div class="budget-box">
+    <div class="brow"><span class="lbl">Vuelos</span><span class="val">US$4.350</span></div>
+    <div class="brow"><span class="lbl">Trenes</span><span class="val">US$1.010</span></div>
+    <div class="brow"><span class="lbl">Alojamientos</span><span class="val">US$4.303</span></div>
+    <div class="brow"><span class="lbl">Seguro PAX Assistance</span><span class="val">US$700</span></div>
+    <div class="brow"><span class="lbl">Pasaje Holanda (no reembolsado)</span><span class="val" style="color:#e24b4a">US$300</span></div>
+    <div class="btotal">
+      <span class="lbl">Total invertido</span>
+      <span class="val">US$10.663</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);">
+      <span style="font-size:11px;color:rgba(255,255,255,0.25);">US$533 / día</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.25);">US$3.554 / persona</span>
+    </div>
+  </div>
+
+  <div class="foot">todo confirmado · 100% cerrado · buen viaje familia!</div>
+
+</div>
+</body>
+</html>
