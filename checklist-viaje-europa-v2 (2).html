@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Viaje Europa — 20 días con bebé</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream-dark: #EDE6D6;
+  --ink: #1A1714;
+  --ink-soft: #4A4540;
+  --ink-muted: #8A8078;
+  --accent: #C4541A;
+  --accent-light: #F0DDD0;
+  --green: #2A5C3F;
+  --green-light: #D4E8DC;
+  --gold: #B8860B;
+  --gold-light: #F5EDD0;
+  --border: #D8D0C4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+.hero {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 48px 28px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(196,84,26,0.15);
+}
+.hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.hero-meta {
+  font-size: 12px;
+  color: rgba(245,240,232,0.5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.progress-wrap {
+  background: var(--ink);
+  padding: 4px 28px 24px;
+}
+.progress-wrap-inner { max-width: 720px; margin: 0 auto; }
+.progress-numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(245,240,232,0.4);
+  margin-bottom: 8px;
+}
+.progress-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.main { max-width: 720px; margin: 0 auto; padding: 32px 16px 0; }
+.section {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.section-header:active { background: var(--cream); }
+.section-title-wrap { display: flex; align-items: center; gap: 10px; }
+.section-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--cream-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.section-right { display: flex; align-items: center; gap: 8px; }
+.section-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--cream-dark);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.section-badge.done-all { background: var(--green-light); color: var(--green); }
+.section-arrow { font-size: 10px; color: var(--ink-muted); transition: transform 0.2s; display: inline-block; }
+.section-arrow.open { transform: rotate(180deg); }
+.items-list { display: block; }
+.items-list.collapsed { display: none; }
+.item-divider { height: 1px; background: var(--border); margin: 0 20px; }
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.1s;
+}
+.item:active { background: var(--cream); }
+.item.checked { opacity: 0.42; }
+.item.checked .item-name { text-decoration: line-through; color: var(--ink-muted); }
+.checkbox {
+  width: 22px; height: 22px;
+  min-width: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+  background: white;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.item.checked .checkbox {
+  background: var(--green);
+  border-color: var(--green);
+}
+.check-icon { display: none; color: white; font-size: 13px; line-height: 1; }
+.item.checked .check-icon { display: block; }
+.item-content { flex: 1; min-width: 0; }
+.item-name { font-size: 14px; color: var(--ink); line-height: 1.45; font-weight: 400; }
+.item-note { font-size: 12px; color: var(--ink-muted); margin-top: 3px; line-height: 1.4; }
+.tags { display: inline-flex; gap: 4px; margin-left: 5px; vertical-align: middle; flex-wrap: wrap; }
+.tag {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 20px;
+}
+.tag-bebe { background: var(--gold-light); color: var(--gold); }
+.tag-imp { background: #FDECEA; color: #C0392B; }
+.tag-tip { background: var(--green-light); color: var(--green); }
+.obs-section {
+  padding: 12px 20px 16px;
+  border-top: 1px dashed var(--border);
+  background: var(--cream);
+}
+.obs-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 7px;
+  display: flex; align-items: center; gap: 6px;
+}
+.obs-label::before {
+  content: '';
+  display: inline-block;
+  width: 10px; height: 1px;
+  background: var(--ink-muted);
+}
+.obs-textarea {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: white;
+  resize: vertical;
+  line-height: 1.5;
+  outline: none;
+  -webkit-appearance: none;
+}
+.obs-textarea::placeholder { color: var(--ink-muted); font-style: italic; }
+.obs-textarea:focus { border-color: var(--accent); }
+.sticky-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(26,23,20,0.96);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 100;
+}
+.footer-stat { font-size: 12px; color: rgba(245,240,232,0.5); }
+.footer-stat strong { color: var(--cream); font-weight: 500; }
+.footer-pct { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--accent); }
+.btn-reset {
+  font-size: 11px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(245,240,232,0.5);
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Lista de viaje</div>
+    <h1>Europa con bebé<br>— 20 días</h1>
+    <div class="hero-meta">
+      <span>✈ Madrid · Barcelona · París · Bruselas</span>
+      <span>🌡 6–20°C</span>
+      <span>👶 6 meses</span>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-wrap-inner">
+    <div class="progress-numbers">
+      <span id="prog-label">0 de 0 ítems listos</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== SECCIÓN 1 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s1')">
+    <div class="section-title-wrap">
+      <div class="section-icon">📋</div>
+      <div class="section-title">Documentación y trámites</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s1">0/10</div>
+      <span class="section-arrow open" id="arrow-s1">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s1">
+    <div class="item" id="s1_0" onclick="toggle('s1_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">DNI de ambos<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Verificar vencimiento — deben tener vigencia durante todo el viaje</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_1" onclick="toggle('s1_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pasaportes de ambos<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Vigentes mínimo 6 meses después del regreso</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_2" onclick="toggle('s1_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">DNI del bebé<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Los menores necesitan DNI propio en Europa</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_3" onclick="toggle('s1_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pasaporte del bebé<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Tramitar con anticipación — tarda semanas</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_4" onclick="toggle('s1_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Seguro de viaje familiar<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Con cobertura médica internacional que incluya bebés</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_5" onclick="toggle('s1_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Fotocopias de toda la documentación<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Copia separada del original + escaneos en el mail/nube</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_6" onclick="toggle('s1_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Reservas de hotel en PDF offline<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Control migratorio puede pedirlas — descargar en el celular</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_7" onclick="toggle('s1_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pasajes de avión en PDF offline<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note"></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_8" onclick="toggle('s1_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pasajes de tren reservados y descargados<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Renfe, SNCF, Thalys, Eurostar — descargar PDFs antes de salir</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s1_9" onclick="toggle('s1_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Contactos de emergencia en papel<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Embajadas argentinas, seguro médico, pediatra de guardia</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s1',this.value)" id="note-s1"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 2 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s2')">
+    <div class="section-title-wrap">
+      <div class="section-icon">👗</div>
+      <div class="section-title">Ropa — adultos (6–20°C)</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s2">0/20</div>
+      <span class="section-arrow open" id="arrow-s2">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s2">
+    <div class="item" id="s2_0" onclick="toggle('s2_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Remeras / camisetas × 5 c/u</div><div class="item-note">Livianas, de secado rápido</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_1" onclick="toggle('s2_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Camisas / blusas × 3 c/u</div><div class="item-note">Para salidas más formales o restaurantes</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_2" onclick="toggle('s2_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pantalones de jean × 2 c/u</div><div class="item-note">Versátiles para cualquier clima</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_3" onclick="toggle('s2_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pantalón cómodo / jogging × 1 c/u</div><div class="item-note">Para viajes en tren o días de hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_4" onclick="toggle('s2_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Calzas o leggins × 2 (ella)</div><div class="item-note">Para capas internas o sport</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_5" onclick="toggle('s2_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Vestido / falda con medias (ella)</div><div class="item-note">Para ocasión especial</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_6" onclick="toggle('s2_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Calzoncillos × 8 c/u</div><div class="item-note">Siempre llevar de más</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_7" onclick="toggle('s2_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bombachas × 8 (ella)</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_8" onclick="toggle('s2_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Medias × 8 pares c/u</div><div class="item-note">Incluir 2 pares térmicos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_9" onclick="toggle('s2_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Ropa interior térmica c/u</div><div class="item-note">Camiseta + calza térmica — para Bruselas y días lluviosos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_10" onclick="toggle('s2_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Sweater grueso × 1 c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_11" onclick="toggle('s2_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Sweater fino × 1 c/u</div><div class="item-note">Para capas intermedias</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_12" onclick="toggle('s2_12')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Campera impermeable con capucha<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Lo más importante para Europa — llueve TODO el tiempo</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_13" onclick="toggle('s2_13')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bufanda × 1 c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_14" onclick="toggle('s2_14')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gorro de lana × 1 c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_15" onclick="toggle('s2_15')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Guantes livianos c/u</div><div class="item-note">Para Bruselas y días de menos de 10°</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_16" onclick="toggle('s2_16')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Zapatos cómodos para caminar<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Van a hacer 15.000 pasos por día — deben estar probados ANTES del viaje</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_17" onclick="toggle('s2_17')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Zapatillas × 1 par c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_18" onclick="toggle('s2_18')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Ojotas / sandalia de baño</div><div class="item-note">Para duchas de hotel o calor interior</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s2_19" onclick="toggle('s2_19')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pijama × 2 c/u</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s2',this.value)" id="note-s2"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 3 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s3')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🧸</div>
+      <div class="section-title">Ropa — bebé</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s3">0/14</div>
+      <span class="section-arrow open" id="arrow-s3">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s3">
+    <div class="item" id="s3_0" onclick="toggle('s3_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bodies manga larga × 10<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">La base de todo — tiene accidentes seguido</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_1" onclick="toggle('s3_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bodies manga corta × 5<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para capas base en días menos fríos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_2" onclick="toggle('s3_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Enteritos / babygrow × 6<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Cómodos para cambiar pañales</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_3" onclick="toggle('s3_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pantaloncitos × 4<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_4" onclick="toggle('s3_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Medias × 10 pares<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Se pierden solas — siempre llevar de más</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_5" onclick="toggle('s3_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Body térmico × 2<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Capa base para los días más fríos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_6" onclick="toggle('s3_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Sweater / abriguito × 3<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_7" onclick="toggle('s3_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Mameluco de plumas o polar<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">El equipito gordo para salir con frío — imprescindible</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_8" onclick="toggle('s3_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gorrito de abrigo × 2<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Los bebés pierden mucho calor por la cabeza</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_9" onclick="toggle('s3_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Manoplas × 2 pares<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_10" onclick="toggle('s3_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pijamas / enterizo con pie × 4<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para dormir en el hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_11" onclick="toggle('s3_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Saco de dormir TOG 2–3<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para que duerma seguro y abrigado a la noche</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_12" onclick="toggle('s3_12')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Baberos × 8<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Con la dentición saliva mucho</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s3_13" onclick="toggle('s3_13')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Muselinas × 4<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Imprescindibles — para tapar, limpiar, calmar, sombra en el carro</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s3',this.value)" id="note-s3"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 4 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s4')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🧴</div>
+      <div class="section-title">Higiene y belleza — adultos</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s4">0/17</div>
+      <span class="section-arrow open" id="arrow-s4">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s4">
+    <div class="item" id="s4_0" onclick="toggle('s4_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Shampoo + acondicionador (tamaño viaje)</div><div class="item-note">O comprar allá para ahorrar peso</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_1" onclick="toggle('s4_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gel de ducha / jabón</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_2" onclick="toggle('s4_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Desodorante × 2 c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_3" onclick="toggle('s4_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Crema hidratante facial y corporal</div><div class="item-note">El frío europeo seca mucho la piel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_4" onclick="toggle('s4_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Protector solar FPS 30+</div><div class="item-note">En Madrid y Barcelona hace sol incluso con frío</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_5" onclick="toggle('s4_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pasta dental + cepillos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_6" onclick="toggle('s4_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Hilo dental + enjuague bucal</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_7" onclick="toggle('s4_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Afeitadora eléctrica o desechables</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_8" onclick="toggle('s4_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Maquillaje básico (ella)</div><div class="item-note">Base, máscara, labial — lo esencial</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_9" onclick="toggle('s4_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Desmaquillante (ella)</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_10" onclick="toggle('s4_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Serum / cremas de skincare</div><div class="item-note">Solo lo básico para no recargar</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_11" onclick="toggle('s4_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Perfume (formato ≤100ml)</div><div class="item-note">Límite de carry-on — o en la valija facturada</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_12" onclick="toggle('s4_12')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Toallitas húmedas para adultos<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Muy útiles en trenes y aviones largos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_13" onclick="toggle('s4_13')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Anticonceptivos / medicación habitual<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Para los 20 días COMPLETOS + extra</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_14" onclick="toggle('s4_14')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Tampones / copa menstrual (ella)</div><div class="item-note">Los europeos son distintos — mejor llevar propios</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_15" onclick="toggle('s4_15')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cortaúñas + pinzas</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s4_16" onclick="toggle('s4_16')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Espejo de mano (ella)</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s4',this.value)" id="note-s4"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 5 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s5')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🛁</div>
+      <div class="section-title">Higiene y cuidado del bebé</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s5">0/12</div>
+      <span class="section-arrow open" id="arrow-s5">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s5">
+    <div class="item" id="s5_0" onclick="toggle('s5_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pañales × 60–80 para los primeros días<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">El resto comprar allá — Pampers y Huggies disponibles en toda Europa</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_1" onclick="toggle('s5_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Toallitas húmedas × 4 paquetes<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Llevar bastante — se usan para absolutamente todo</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_2" onclick="toggle('s5_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Crema de pañal (Bepanthen o similar)<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para prevenir irritaciones con el cambio de agua y temperatura</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_3" onclick="toggle('s5_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Shampoo de bebé sin lágrimas<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_4" onclick="toggle('s5_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gel de baño de bebé<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_5" onclick="toggle('s5_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Termómetro digital<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Esencial — tener siempre en el bolso pañalera</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_6" onclick="toggle('s5_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Aspirador nasal (tipo Frida)<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">El frío y el avión resecan las mucosidades del bebé</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_7" onclick="toggle('s5_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Suero fisiológico monodosis × 20<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para limpiar la nariz en el avión y los días fríos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_8" onclick="toggle('s5_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cortaúñas de bebé<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_9" onclick="toggle('s5_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsas para pañales usados<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Indispensable en museos, trenes, lugares sin baño cercano</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_10" onclick="toggle('s5_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsas Ziploc grandes × 10<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para ropa sucia, pañales, derrames — salvan el viaje</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s5_11" onclick="toggle('s5_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cambiador portátil plegable<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para cambiar en cualquier lugar — muchos baños no tienen</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s5',this.value)" id="note-s5"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 6 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s6')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🍼</div>
+      <div class="section-title">Alimentación del bebé</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s6">0/11</div>
+      <span class="section-arrow open" id="arrow-s6">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s6">
+    <div class="item" id="s6_0" onclick="toggle('s6_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Leche de fórmula para 3–4 días (si usa)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Aptamil y Nutrilon disponibles en farmacias europeas</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_1" onclick="toggle('s6_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Biberones × 3<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_2" onclick="toggle('s6_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cepillo limpiabiberones<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_3" onclick="toggle('s6_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsas esterilizadoras de microondas<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Más livianas que esterilizador — funcionan en cualquier hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_4" onclick="toggle('s6_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Tetinas de repuesto × 3<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_5" onclick="toggle('s6_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Chupetes × 4<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Siempre se cae uno en el peor momento</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_6" onclick="toggle('s6_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cadena / soporte de chupete × 2<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_7" onclick="toggle('s6_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Extractor portátil USB (si lactancia)<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_8" onclick="toggle('s6_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsas para leche materna × 20<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_9" onclick="toggle('s6_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Porta-biberón térmico<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para mantener temperatura en paseos largos</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s6_10" onclick="toggle('s6_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Papillas / pouches para avión y primeros días<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Si ya empezó sólidos — llevar 5–6 para no depender de encontrar allá</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s6',this.value)" id="note-s6"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 7 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s7')">
+    <div class="section-title-wrap">
+      <div class="section-icon">💊</div>
+      <div class="section-title">Botiquín</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s7">0/12</div>
+      <span class="section-arrow open" id="arrow-s7">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s7">
+    <div class="item" id="s7_0" onclick="toggle('s7_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Paracetamol infantil (Tempra / Panadol bebé)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para fiebre — consultar dosis con el pediatra antes de viajar</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_1" onclick="toggle('s7_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Ibuprofeno infantil suspensión<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Dosis según peso — preguntar al pediatra</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_2" onclick="toggle('s7_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Suero oral en sobres<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para diarrea del bebé</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_3" onclick="toggle('s7_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Crema cortisona leve<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para irritaciones de piel y picaduras</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_4" onclick="toggle('s7_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Alcohol en gel × 2<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para manos antes de manipular al bebé</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_5" onclick="toggle('s7_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gotas para oídos bebé (si el pediatra indica)<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">El avión genera presión en los oídos del bebé</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_6" onclick="toggle('s7_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Paracetamol adulto</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_7" onclick="toggle('s7_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Ibuprofeno adulto</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_8" onclick="toggle('s7_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Antihistamínico adulto</div><div class="item-note">Para alergias o picaduras</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_9" onclick="toggle('s7_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Medicamentos habituales propios<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Para 20 días + extra por si el regreso se retrasa</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_10" onclick="toggle('s7_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Curitas variadas + gasas</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s7_11" onclick="toggle('s7_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Carta del pediatra en inglés/español<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Con diagnósticos, medicaciones y dosis habituales del bebé</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s7',this.value)" id="note-s7"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 8 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s8')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🔌</div>
+      <div class="section-title">Tecnología y cargadores</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s8">0/12</div>
+      <span class="section-arrow open" id="arrow-s8">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s8">
+    <div class="item" id="s8_0" onclick="toggle('s8_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Adaptadores de enchufes tipo C/E × 3<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Argentina usa tipo I — Europa usa tipo C/F. Llevar varios para cargar todo a la vez</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_1" onclick="toggle('s8_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cargador de celular c/u</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_2" onclick="toggle('s8_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cables USB-C / Lightning × 2 c/u</div><div class="item-note">Siempre llevar cable de repuesto</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_3" onclick="toggle('s8_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Power bank 20.000 mAh<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Esencial para días de turismo — museos y parques no tienen enchufes</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_4" onclick="toggle('s8_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cargador de cámara + baterías extra</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_5" onclick="toggle('s8_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cámara de fotos / GoPro</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_6" onclick="toggle('s8_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Auriculares con cancelación de ruido<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para el avión y para cuando el bebé duerme en el hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_7" onclick="toggle('s8_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Tarjeta SIM internacional o eSIM<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Airalo o Holafly — activar ANTES de salir de Argentina</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_8" onclick="toggle('s8_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Parlante bluetooth pequeño (opcional)<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para música del bebé en el hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_9" onclick="toggle('s8_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">White noise descargado offline<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Spotify o app de ruido blanco — sin depender de WiFi del hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_10" onclick="toggle('s8_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Google Maps offline descargado<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Descargar Madrid, Barcelona, París y Bruselas antes de salir</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s8_11" onclick="toggle('s8_11')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Google Translate offline (francés, neerlandés)<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para Bruselas y zonas sin señal</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s8',this.value)" id="note-s8"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 9 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s9')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🚼</div>
+      <div class="section-title">Movilidad del bebé</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s9">0/6</div>
+      <span class="section-arrow open" id="arrow-s9">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s9">
+    <div class="item" id="s9_0" onclick="toggle('s9_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cochecito liviano (tipo Yoyo o similar)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Europa tiene muchas escaleras — tiene que ser liviano y compacto</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s9_1" onclick="toggle('s9_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Portabebés ergonómico (carrier)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">IMPRESCINDIBLE — para museos, adoquines, metro. Más útil que el carro</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s9_2" onclick="toggle('s9_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Cubierta impermeable para cochecito<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Para la lluvia — en París y Bruselas llueve con frecuencia</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s9_3" onclick="toggle('s9_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Colchita para el carro<span class="tags"><span class="tag tag-bebe">bebé</span></span></div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s9_4" onclick="toggle('s9_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Solicitar cuna de bebé al hotel (cot)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Pedir al hacer la reserva — la mayoría la provee gratis</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s9_5" onclick="toggle('s9_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolso pañalera / mochila grande<span class="tags"><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Ergonómica, que entre en el carro o se pueda llevar como mochila</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s9',this.value)" id="note-s9"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 10 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s10')">
+    <div class="section-title-wrap">
+      <div class="section-icon">✈️</div>
+      <div class="section-title">Tips especiales — avión con bebé</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s10">0/6</div>
+      <span class="section-arrow open" id="arrow-s10">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s10">
+    <div class="item" id="s10_0" onclick="toggle('s10_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Reservar cuna de avión (bassinet)<span class="tags"><span class="tag tag-imp">crítico</span><span class="tag tag-bebe">bebé</span></span></div><div class="item-note">Llamar a la aerolínea con anticipación — fila bulkhead o emergency exit</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s10_1" onclick="toggle('s10_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Pedir boarding preferencial por familia<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Disponible siempre — familia con bebé embarca primero</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s10_2" onclick="toggle('s10_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Dar teta o biberón en despegue y aterrizaje<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">El succionado equilibra la presión en los oídos del bebé</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s10_3" onclick="toggle('s10_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Muda extra en el bolso de mano<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para el bebé Y para cada adulto — los accidentes existen</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s10_4" onclick="toggle('s10_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Confirmar que líquidos del bebé pasan control<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Leche, agua y papillas del bebé están exentos del límite de 100ml</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s10_5" onclick="toggle('s10_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Llevar cochecito hasta la puerta del avión<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Se factura en la escalerilla gratis y se recupera al bajar</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s10',this.value)" id="note-s10"></textarea></div>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 11 ===== -->
+<div class="section">
+  <div class="section-header" onclick="toggleSection('s11')">
+    <div class="section-title-wrap">
+      <div class="section-icon">🎒</div>
+      <div class="section-title">Varios y tips generales</div>
+    </div>
+    <div class="section-right">
+      <div class="section-badge" id="badge-s11">0/11</div>
+      <span class="section-arrow open" id="arrow-s11">▼</span>
+    </div>
+  </div>
+  <div class="items-list" id="list-s11">
+    <div class="item" id="s11_0" onclick="toggle('s11_0')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Candados para maletas</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_1" onclick="toggle('s11_1')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsas de compresión para la ropa<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Ahorran espacio enorme — ideales para el viaje de vuelta con compras</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_2" onclick="toggle('s11_2')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Bolsa de ropa sucia separada</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_3" onclick="toggle('s11_3')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Detergente en cápsulas<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para lavar ropa del bebé a mano en el hotel</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_4" onclick="toggle('s11_4')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Efectivo en Euros<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Al menos 300€ — muchos lugares pequeños no aceptan tarjeta</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_5" onclick="toggle('s11_5')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Tarjeta de crédito sin recargo exterior<span class="tags"><span class="tag tag-imp">crítico</span></span></div><div class="item-note">Brubank, Cuenta DNI, Santander 0%FX — revisar antes de viajar</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_6" onclick="toggle('s11_6')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Botella de agua reutilizable × 2<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">El agua en Europa es potable — ahorran mucho dinero</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_7" onclick="toggle('s11_7')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Paraguas compacto × 2</div><div class="item-note">Uno para cada adulto — con el carro no se puede compartir uno solo</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_8" onclick="toggle('s11_8')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Gafas de sol × 2</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_9" onclick="toggle('s11_9')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Snacks de Argentina para el viaje<span class="tags"><span class="tag tag-tip">tip</span></span></div><div class="item-note">Galletitas, mate cocido, barras de cereal — lo que extrañen de casa</div></div></div>
+    <div class="item-divider"></div>
+    <div class="item" id="s11_10" onclick="toggle('s11_10')"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-name">Mini linterna o linterna del celular lista<span class="tags"><span class="tag tag-bebe">bebé</span><span class="tag tag-tip">tip</span></span></div><div class="item-note">Para no encender la luz del cuarto cuando el bebé duerme</div></div></div>
+    <div class="obs-section"><div class="obs-label">Observaciones</div><textarea class="obs-textarea" placeholder="Notas, compras pendientes, recordatorios..." oninput="saveNote('s11',this.value)" id="note-s11"></textarea></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="sticky-footer">
+  <div class="footer-stat"><strong id="f-done">0</strong> / <span id="f-total">0</span> listos</div>
+  <div class="footer-pct" id="f-pct">0%</div>
+  <button class="btn-reset" onclick="resetAll()">Reiniciar</button>
+</div>
+
+<script>
+var sectionCounts = {
+  s1:10, s2:20, s3:14, s4:17, s5:12,
+  s6:11, s7:12, s8:12, s9:6, s10:6, s11:11
+};
+
+var totalItems = 0;
+Object.values(sectionCounts).forEach(function(n){ totalItems += n; });
+
+var state = {};
+var notes = {};
+
+function saveData() {
+  try {
+    var payload = { s: state, n: notes };
+    var encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    history.replaceState(null, '', '#' + encoded);
+  } catch(e){}
+}
+
+function loadData() {
+  try {
+    var hash = window.location.hash.slice(1);
+    if (!hash) return;
+    var payload = JSON.parse(decodeURIComponent(escape(atob(hash))));
+    if (payload.s) state = payload.s;
+    if (payload.n) notes = payload.n;
+  } catch(e){}
+}
+
+loadData();
+
+function toggle(id) {
+  state[id] = !state[id];
+  var el = document.getElementById(id);
+  if (el) {
+    if (state[id]) {
+      el.classList.add('checked');
+    } else {
+      el.classList.remove('checked');
+    }
+  }
+  updateProgress();
+  updateBadge(id.split('_')[0]);
+  saveData();
+}
+
+function saveNote(secId, val) {
+  notes[secId] = val;
+  saveData();
+}
+
+function toggleSection(id) {
+  var list = document.getElementById('list-' + id);
+  var arrow = document.getElementById('arrow-' + id);
+  if (!list) return;
+  if (list.classList.contains('collapsed')) {
+    list.classList.remove('collapsed');
+    arrow.classList.add('open');
+  } else {
+    list.classList.add('collapsed');
+    arrow.classList.remove('open');
+  }
+}
+
+function updateBadge(secId) {
+  var count = sectionCounts[secId] || 0;
+  var done = 0;
+  for (var i = 0; i < count; i++) {
+    if (state[secId + '_' + i]) done++;
+  }
+  var badge = document.getElementById('badge-' + secId);
+  if (badge) {
+    badge.textContent = done + '/' + count;
+    if (done === count) {
+      badge.classList.add('done-all');
+    } else {
+      badge.classList.remove('done-all');
+    }
+  }
+}
+
+function updateProgress() {
+  var done = 0;
+  Object.keys(state).forEach(function(k){ if (state[k]) done++; });
+  var pct = totalItems > 0 ? Math.round((done / totalItems) * 100) : 0;
+  var fill = document.getElementById('prog-fill');
+  var label = document.getElementById('prog-label');
+  var pctEl = document.getElementById('prog-pct');
+  var fDone = document.getElementById('f-done');
+  var fTotal = document.getElementById('f-total');
+  var fPct = document.getElementById('f-pct');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = done + ' de ' + totalItems + ' ítems listos';
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (fDone) fDone.textContent = done;
+  if (fTotal) fTotal.textContent = totalItems;
+  if (fPct) fPct.textContent = pct + '%';
+}
+
+function resetAll() {
+  if (!confirm('¿Reiniciar toda la lista? Se borran todos los tildes y observaciones.')) return;
+  state = {};
+  notes = {};
+  saveData();
+  document.querySelectorAll('.item').forEach(function(el){ el.classList.remove('checked'); });
+  document.querySelectorAll('.obs-textarea').forEach(function(el){ el.value = ''; });
+  Object.keys(sectionCounts).forEach(function(secId){ updateBadge(secId); });
+  updateProgress();
+}
+
+// Restaurar estado guardado
+function restoreState() {
+  Object.keys(state).forEach(function(id) {
+    if (state[id]) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('checked');
+    }
+  });
+  Object.keys(notes).forEach(function(secId) {
+    var ta = document.getElementById('note-' + secId);
+    if (ta) ta.value = notes[secId];
+  });
+  Object.keys(sectionCounts).forEach(function(secId){ updateBadge(secId); });
+  updateProgress();
+}
+
+restoreState();
+</script>
+</body>
+</html>
